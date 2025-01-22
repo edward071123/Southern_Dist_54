@@ -115,21 +115,6 @@
             $('#startDate').val(selectedDate);
         });
 
-        // 自動產生房號
-        $('#autoAssignRoom').on('click', function () {
-            $.ajax({
-                url: 'api/auto_assign_room.php',
-                method: 'GET',
-                data: { date: selectedDate },
-                success: function (roomNumber) {
-                    $('#roomNumber').val(roomNumber);
-                },
-                error: function () {
-                    alert('無法產生房號，請稍後再試。');
-                }
-            });
-        });
-
         // 確定訂房
         $('#confirmBooking').on('click', function () {
             const roomCount = $('#roomCount').val();
@@ -159,6 +144,74 @@
         $(document).ready(function () {
             loadCalendar(currentYear, currentMonth);
         });
+
+        // 自動產生房號
+        $('#autoAssignRoom').on('click', function () {
+            if (!selectedDate) {
+                alert('請先選擇入住日期！');
+                return;
+            }
+            $.ajax({
+                url: 'api/auto_assign_room.php',
+                method: 'GET',
+                data: { date: selectedDate },
+                success: function (roomNumber) {
+                    $('#roomNumber').val(roomNumber);
+                    alert(`自動分配的房號為：${roomNumber}`);
+                },
+                error: function () {
+                    alert('無法產生房號，請稍後再試。');
+                }
+            });
+        });
+
+        // 手動選擇房號
+        $('#manualSelectRoom').on('click', function () {
+            if (!selectedDate) {
+                alert('請先選擇入住日期！');
+                return;
+            }
+            $('#roomModal').show();
+            loadAvailableRooms(selectedDate);
+        });
+
+        // 加載可用房間
+        function loadAvailableRooms(date) {
+            $.ajax({
+                url: 'api/get_rooms.php',
+                method: 'GET',
+                data: { date },
+                dataType: 'json',
+                success: function (data) {
+                    const roomGrid = $('#roomGrid');
+                    roomGrid.empty();
+                    data.forEach(room => {
+                        const roomClass = room.available ? 'room available' : 'room unavailable';
+                        roomGrid.append(`
+                            <div class="${roomClass}" data-room="${room.id}">
+                                房號：${room.id}
+                            </div>
+                        `);
+                    });
+                },
+                error: function () {
+                    alert('無法加載房間，請稍後再試。');
+                }
+            });
+        }
+
+        // 點擊房號進行選擇
+        $(document).on('click', '.room.available', function () {
+            const selectedRoom = $(this).data('room');
+            $('#roomNumber').val(selectedRoom);
+            $('#roomModal').hide();
+        });
+
+        // 關閉彈窗
+        $('#closeRoomModal').on('click', function () {
+            $('#roomModal').hide();
+        });
+
     </script>
 </body>
 </html>

@@ -20,80 +20,6 @@ h1 {
     color: #333;
 }
 
-/* 月曆控制按鈕 */
-.calendar-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.calendar-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.calendar-btn:hover {
-    background-color: #0056b3;
-}
-
-.calendar-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-}
-
-/* 月曆網格 */
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-}
-
-.day {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-align: center;
-    background-color: #fff;
-    transition: transform 0.2s, background-color 0.2s;
-}
-
-.day.available {
-    cursor: pointer;
-    background-color: #e7f9e7;
-}
-
-.day.unavailable {
-    background-color: #f8d7da;
-    color: #999;
-}
-
-.day.available:hover {
-    background-color: #d4edda;
-    transform: scale(1.05);
-}
-
-.day-number {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-}
-
-.day-info {
-    font-size: 14px;
-    color: #666;
-}
 
 /* 手機友好樣式 */
 @media (max-width: 600px) {
@@ -148,16 +74,37 @@ h1 {
 }
 
 .day {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 15px;
-    text-align: center;
     border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #f9f9f9;
-    cursor: pointer;
+    text-align: center;
+    background-color: #fff;
+    transition: transform 0.2s, background-color 0.2s;
 }
 
 .day.available {
+    cursor: pointer;
     background-color: #e7f9e7;
+}
+
+.day.available:hover {
+    background-color: #d4edda;
+    transform: scale(1.05);
+}
+
+.day-number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.day-info {
+    font-size: 14px;
+    color: #666;
 }
 
 .day.unavailable {

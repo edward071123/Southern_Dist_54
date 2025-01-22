@@ -3,80 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>訪客留言 - 快樂旅遊網</title>
+    <title>訪客留言列表 - 快樂旅遊網</title>
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="css/multiColumnTemplate.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
-    <main>
-        <h1>訪客留言板</h1>
-        <div id="messages">
-            <!-- 留言列表 -->
+    <div class="header"></div>
+    <main class="guestbook-container">
+        <div class="main-header">
+            <h1>訪客留言列表</h1>
+            <button id="addMessageBtn" class="add-message-btn">新增留言</button>
         </div>
-        <form id="commentForm">
-            <label for="name">姓名：</label>
-            <input type="text" id="name" name="name" required>
-            <label for="email">Email：</label>
-            <input type="email" id="email" name="email" required>
-            <label for="phone">電話：</label>
-            <input type="text" id="phone" name="phone" pattern="[0-9\-]+" required>
-            <label for="message">留言內容：</label>
-            <textarea id="message" name="message" required></textarea>
-            <button type="submit">提交留言</button>
-        </form>
+
+        <!-- 留言列表 -->
+        <div id="messageList" class="message-list">
+            <!-- 留言內容將由 AJAX 加載 -->
+        </div>
+
+        <!-- 新增留言表單 -->
+        <div id="newMessageForm" class="new-message-form" style="display:none;">
+            <h2>新增留言</h2>
+            <form id="messageForm">
+                <label for="name">姓名：</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email：</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="phone">電話：</label>
+                <input type="text" id="phone" name="phone" pattern="[0-9\-]+" required>
+
+                <label for="message">留言內容：</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">送出留言</button>
+                    <button type="button" id="cancelBtn" class="cancel-btn">取消</button>
+                </div>
+            </form>
+        </div>
     </main>
-    <?php include 'includes/footer.php'; ?>
-
-    <script>
-        // 加載留言
-        function loadMessages() {
-            $.ajax({
-                url: 'api/get_messages.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    const messagesContainer = $('#messages');
-                    messagesContainer.empty();
-                    data.forEach(message => {
-                        messagesContainer.append(`
-                            <div class="message">
-                                <h3>${message.name} (${message.email})</h3>
-                                <p>${message.content}</p>
-                                <small>發表於 ${message.date}</small>
-                            </div>
-                        `);
-                    });
-                },
-                error: function () {
-                    alert('無法加載留言，請稍後再試。');
-                }
-            });
-        }
-
-        // 提交留言
-        $('#commentForm').on('submit', function (event) {
-            event.preventDefault();
-            const formData = $(this).serialize();
-            $.ajax({
-                url: 'api/post_message.php',
-                method: 'POST',
-                data: formData,
-                success: function () {
-                    alert('留言成功！');
-                    loadMessages();
-                    $('#commentForm')[0].reset();
-                },
-                error: function () {
-                    alert('提交留言失敗，請稍後再試。');
-                }
-            });
-        });
-
-        // 初始化
-        $(document).ready(function () {
-            loadMessages();
-        });
-    </script>
+    <div class="footer"></div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('.header').load('includes/header.html')
+    $('.footer').load('includes/footer.html')
+    // 加載留言
+    function loadMessages() {
+        $.ajax({
+            url: 'api/get_messages.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                const messageList = $('#messageList');
+                messageList.empty();
+                data.forEach(message => {
+                    messageList.append(`
+                        <div class="message">
+                            <h3>${message.name}</h3>
+                            <p>${message.content}</p>
+                            <div class="message-footer">
+                                <span>發表於 ${message.date}</span>
+                                <span>Email: ${message.email} | 電話: ${message.phone}</span>
+                            </div>
+                            <div class="message-actions">
+                                <span>留言序號：(${message.id})</span>
+                                <button class="edit-btn">編輯</button>
+                                <button class="delete-btn" data-id="${message.id}">刪除</button>
+                            </div>
+                        </div>
+                    `);
+                });
+            },
+            error: function () {
+                alert('無法加載留言，請稍後再試。');
+            }
+        });
+    }
+
+    // 顯示新增留言表單
+    $('#addMessageBtn').on('click', function () {
+        $('#newMessageForm').show();
+    });
+
+    // 隱藏新增留言表單
+    $('#cancelBtn').on('click', function () {
+        $('#newMessageForm').hide();
+    });
+
+    // 提交留言
+    $('#messageForm').on('submit', function (event) {
+        event.preventDefault();
+        const formData = $(this).serialize();
+
+        $.ajax({
+            url: 'api/post_message.php',
+            method: 'POST',
+            data: formData,
+            success: function () {
+                alert('留言成功！');
+                loadMessages();
+                $('#newMessageForm').hide();
+                $('#messageForm')[0].reset();
+            },
+            error: function () {
+                alert('提交留言失敗，請稍後再試。');
+            }
+        });
+    });
+
+    // 初始化
+    $(document).ready(function () {
+        loadMessages();
+    });
+</script>
 </html>

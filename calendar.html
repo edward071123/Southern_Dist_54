@@ -71,6 +71,7 @@
                 data: { year, month },
                 dataType: 'json',
                 success: function (data) {
+                    console.log(data)
                     const calendarGrid = $('#calendarGrid');
                     calendarGrid.empty();
 
@@ -84,7 +85,11 @@
                         `);
                     });
                 },
-                error: function () {
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('HTTP status code: ' + jqXHR.status + '\n' +
+                    'textStatus: ' + textStatus + '\n' +
+                    'errorThrown: ' + errorThrown);
+                    console.log('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
                     alert('無法加載月曆，請稍後再試。');
                 }
             });
@@ -134,7 +139,11 @@
                     alert('訂房成功！');
                     location.reload();
                 },
-                error: function () {
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('HTTP status code: ' + jqXHR.status + '\n' +
+                    'textStatus: ' + textStatus + '\n' +
+                    'errorThrown: ' + errorThrown);
+                    console.log('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
                     alert('訂房失敗，請稍後再試。');
                 }
             });
@@ -159,7 +168,11 @@
                     $('#roomNumber').val(roomNumber);
                     alert(`自動分配的房號為：${roomNumber}`);
                 },
-                error: function () {
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('HTTP status code: ' + jqXHR.status + '\n' +
+                    'textStatus: ' + textStatus + '\n' +
+                    'errorThrown: ' + errorThrown);
+                    console.log('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
                     alert('無法產生房號，請稍後再試。');
                 }
             });
@@ -194,7 +207,11 @@
                         `);
                     });
                 },
-                error: function () {
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('HTTP status code: ' + jqXHR.status + '\n' +
+                    'textStatus: ' + textStatus + '\n' +
+                    'errorThrown: ' + errorThrown);
+                    console.log('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
                     alert('無法加載房間，請稍後再試。');
                 }
             });

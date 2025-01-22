@@ -10,14 +10,16 @@ $lastDay = date("Y-m-t", strtotime($firstDay));
 // 預設返回的每一天資料
 $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 $calendar = [];
-
+$roomCounts = [1,2,3,4,5,6,7,8,9];
+$priceCounts = [1000, 2000, 3000, 5000];
 for ($day = 1; $day <= $daysInMonth; $day++) {
     $date = sprintf('%04d-%02d-%02d', $year, $month, $day);
     $calendar[$date] = [
         'date' => $date,
         'day' => $day,
-        'rooms' => 8,  // 假設每天有 8 間房
-        'available' => true
+        'rooms' => $roomCounts[rand(0,8)],  // 隨機產生
+        'available' => true,
+        'price' => $priceCounts[rand(0,3)],  // 隨機產生
     ];
 }
 

@@ -22,42 +22,42 @@
         </div>
     </main>
     <div class="footer"></div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $('.header').load('includes/header.html')
-        $('.footer').load('includes/footer.html')
-        // 加載交通資訊
-        function loadTrafficInfo(type) {
-            $.ajax({
-                url: 'api/get_traffic.php',
-                method: 'GET',
-                data: { type },
-                dataType: 'json',
-                success: function (data) {
-                    const trafficContent = $('#trafficContent');
-                    trafficContent.empty();
-                    data.forEach(info => {
-                        trafficContent.append(`
-                            <div class="traffic-item">
-                                <h2>${info.title}</h2>
-                                <p>${info.description}</p>
-                                <a href="${info.link}" target="_blank">更多資訊</a>
-                            </div>
-                        `);
-                    });
-                },
-                error: function () {
-                    alert('無法加載交通資訊，請稍後再試。');
-                }
-            });
-        }
-
-        // 選擇交通方式按鈕點擊事件
-        $('.traffic-btn').on('click', function () {
-            const type = $(this).data('type');
-            loadTrafficInfo(type);
-        });
-    </script>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('.header').load('includes/header.html')
+    $('.footer').load('includes/footer.html')
+    // 加載交通資訊
+    function loadTrafficInfo(type) {
+        $.ajax({
+            url: 'api/get_traffic.php',
+            method: 'GET',
+            data: { type },
+            dataType: 'json',
+            success: function (data) {
+                const trafficContent = $('#trafficContent');
+                trafficContent.empty();
+                data.forEach(info => {
+                    trafficContent.append(`
+                        <div class="traffic-item">
+                            <h2>${info.title}</h2>
+                            <p>${info.description}</p>
+                            <a href="${info.link}" target="_blank">更多資訊</a>
+                        </div>
+                    `);
+                });
+            },
+            error: function () {
+                alert('無法加載交通資訊，請稍後再試。');
+            }
+        });
+    }
+
+    // 選擇交通方式按鈕點擊事件
+    $('.traffic-btn').on('click', function () {
+        const type = $(this).data('type');
+        loadTrafficInfo(type);
+    });
+    </script>
 </html>
 

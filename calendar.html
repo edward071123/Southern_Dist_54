@@ -44,11 +44,19 @@
             <input type="text" id="roomNumber" readonly>
 
             <button id="autoAssignRoom" class="action-btn">自動產生房號</button>
-            <button id="selectRoom" class="action-btn">選擇房號</button>
+            <button id="manualSelectRoom" class="action-btn">選擇房號</button>
 
             <div class="action-buttons">
                 <button id="confirmBooking" class="confirm-btn">確定訂房</button>
                 <button id="cancelBooking" class="cancel-btn">取消</button>
+            </div>
+        </div>
+        <!-- 手動選擇房號彈窗 -->
+        <div id="roomModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <h2>選擇房號</h2>
+                <div id="roomGrid" class="room-grid"></div>
+                <button id="closeRoomModal" class="cancel-btn">關閉</button>
             </div>
         </div>
     </main>

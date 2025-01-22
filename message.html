@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訪客留言 - 快樂旅遊網</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <?php include 'includes/header.php'; ?>
+    <main>
+        <h1>訪客留言板</h1>
+        <div id="messages">
+            <!-- 留言列表 -->
+        </div>
+        <form id="commentForm">
+            <label for="name">姓名：</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email：</label>
+            <input type="email" id="email" name="email" required>
+            <label for="phone">電話：</label>
+            <input type="text" id="phone" name="phone" pattern="[0-9\-]+" required>
+            <label for="message">留言內容：</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">提交留言</button>
+        </form>
+    </main>
+    <?php include 'includes/footer.php'; ?>
+
+    <script>
+        // 加載留言
+        function loadMessages() {
+            $.ajax({
+                url: 'api/get_messages.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    const messagesContainer = $('#messages');
+                    messagesContainer.empty();
+                    data.forEach(message => {
+                        messagesContainer.append(`
+                            <div class="message">
+                                <h3>${message.name} (${message.email})</h3>
+                                <p>${message.content}</p>
+                                <small>發表於 ${message.date}</small>
+                            </div>
+                        `);
+                    });
+                },
+                error: function () {
+                    alert('無法加載留言，請稍後再試。');
+                }
+            });
+        }
+
+        // 提交留言
+        $('#commentForm').on('submit', function (event) {
+            event.preventDefault();
+            const formData = $(this).serialize();
+            $.ajax({
+                url: 'api/post_message.php',
+                method: 'POST',
+                data: formData,
+                success: function () {
+                    alert('留言成功！');
+                    loadMessages();
+                    $('#commentForm')[0].reset();
+                },
+                error: function () {
+                    alert('提交留言失敗，請稍後再試。');
+                }
+            });
+        });
+
+        // 初始化
+        $(document).ready(function () {
+            loadMessages();
+        });
+    </script>
+</body>
+</html>

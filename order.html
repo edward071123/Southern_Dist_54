@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>訪客訂餐 - 快樂旅遊網</title>
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="css/multiColumnTemplate.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
+    <div class="header"></div>
     <main class="order-container">
         <h1>訪客訂餐</h1>
 
@@ -60,122 +61,124 @@
             </form>
         </section>
     </main>
-    <?php include 'includes/footer.php'; ?>
-
-    <script>
-        let orderItems = []; // 儲存訂單內容
-
-        // 加載菜單
-        function loadMenu() {
-            $.ajax({
-                url: 'api/get_menu.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    const menuGrid = $('#menuGrid');
-                    menuGrid.empty();
-                    data.forEach(item => {
-                        menuGrid.append(`
-                            <div class="menu-item">
-                                <h3>${item.name}</h3>
-                                <p>價格：$${item.price}</p>
-                                <button class="add-to-order-btn" data-id="${item.id}" data-name="${item.name}" data-price="${item.price}">加入訂單</button>
-                            </div>
-                        `);
-                    });
-                },
-                error: function () {
-                    alert('無法加載菜單，請稍後再試。');
-                }
-            });
-        }
-
-        // 新增菜品到訂單
-        $(document).on('click', '.add-to-order-btn', function () {
-            const id = $(this).data('id');
-            const name = $(this).data('name');
-            const price = parseFloat($(this).data('price'));
-
-            const existingItem = orderItems.find(item => item.id === id);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                orderItems.push({ id, name, price, quantity: 1 });
-            }
-            renderOrder();
-        });
-
-        // 渲染訂單摘要
-        function renderOrder() {
-            const orderTableBody = $('#orderTable tbody');
-            const totalPriceElement = $('#totalPrice');
-            orderTableBody.empty();
-
-            let totalPrice = 0;
-            orderItems.forEach(item => {
-                const subtotal = item.price * item.quantity;
-                totalPrice += subtotal;
-
-                orderTableBody.append(`
-                    <tr>
-                        <td>${item.name}</td>
-                        <td>$${item.price}</td>
-                        <td>
-                            <input type="number" class="quantity-input" data-id="${item.id}" value="${item.quantity}" min="1">
-                        </td>
-                        <td>$${subtotal}</td>
-                        <td>
-                            <button class="remove-item-btn" data-id="${item.id}">移除</button>
-                        </td>
-                    </tr>
-                `);
-            });
-            totalPriceElement.text(`$${totalPrice}`);
-        }
-
-        // 更新數量
-        $(document).on('change', '.quantity-input', function () {
-            const id = $(this).data('id');
-            const quantity = parseInt($(this).val());
-
-            const item = orderItems.find(item => item.id === id);
-            if (item) {
-                item.quantity = quantity;
-            }
-            renderOrder();
-        });
-
-        // 移除訂單項目
-        $(document).on('click', '.remove-item-btn', function () {
-            const id = $(this).data('id');
-            orderItems = orderItems.filter(item => item.id !== id);
-            renderOrder();
-        });
-
-        // 提交訂單
-        $('#confirmOrderForm').on('submit', function (event) {
-            event.preventDefault();
-            const formData = $(this).serialize();
-            const orderData = { items: orderItems };
-
-            $.ajax({
-                url: 'api/submit_order.php',
-                method: 'POST',
-                data: { ...formData, order: JSON.stringify(orderData) },
-                success: function () {
-                    alert('訂單提交成功！');
-                    location.reload();
-                },
-                error: function () {
-                    alert('訂單提交失敗，請稍後再試。');
-                }
-            });
-        });
-
-        // 初始化
-        $(document).ready(function () {
-            loadMenu();
-        });
-    </script>
+    <div class="footer"></div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('.header').load('includes/header.html')
+    $('.footer').load('includes/footer.html')
+    let orderItems = []; // 儲存訂單內容
+
+    // 加載菜單
+    function loadMenu() {
+        $.ajax({
+            url: 'api/get_menu.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                const menuGrid = $('#menuGrid');
+                menuGrid.empty();
+                data.forEach(item => {
+                    menuGrid.append(`
+                        <div class="menu-item">
+                            <h3>${item.name}</h3>
+                            <p>價格：$${item.price}</p>
+                            <button class="add-to-order-btn" data-id="${item.id}" data-name="${item.name}" data-price="${item.price}">加入訂單</button>
+                        </div>
+                    `);
+                });
+            },
+            error: function () {
+                alert('無法加載菜單，請稍後再試。');
+            }
+        });
+    }
+
+    // 新增菜品到訂單
+    $(document).on('click', '.add-to-order-btn', function () {
+        const id = $(this).data('id');
+        const name = $(this).data('name');
+        const price = parseFloat($(this).data('price'));
+
+        const existingItem = orderItems.find(item => item.id === id);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            orderItems.push({ id, name, price, quantity: 1 });
+        }
+        renderOrder();
+    });
+
+    // 渲染訂單摘要
+    function renderOrder() {
+        const orderTableBody = $('#orderTable tbody');
+        const totalPriceElement = $('#totalPrice');
+        orderTableBody.empty();
+
+        let totalPrice = 0;
+        orderItems.forEach(item => {
+            const subtotal = item.price * item.quantity;
+            totalPrice += subtotal;
+
+            orderTableBody.append(`
+                <tr>
+                    <td>${item.name}</td>
+                    <td>$${item.price}</td>
+                    <td>
+                        <input type="number" class="quantity-input" data-id="${item.id}" value="${item.quantity}" min="1">
+                    </td>
+                    <td>$${subtotal}</td>
+                    <td>
+                        <button class="remove-item-btn" data-id="${item.id}">移除</button>
+                    </td>
+                </tr>
+            `);
+        });
+        totalPriceElement.text(`$${totalPrice}`);
+    }
+
+    // 更新數量
+    $(document).on('change', '.quantity-input', function () {
+        const id = $(this).data('id');
+        const quantity = parseInt($(this).val());
+
+        const item = orderItems.find(item => item.id === id);
+        if (item) {
+            item.quantity = quantity;
+        }
+        renderOrder();
+    });
+
+    // 移除訂單項目
+    $(document).on('click', '.remove-item-btn', function () {
+        const id = $(this).data('id');
+        orderItems = orderItems.filter(item => item.id !== id);
+        renderOrder();
+    });
+
+    // 提交訂單
+    $('#confirmOrderForm').on('submit', function (event) {
+        event.preventDefault();
+        const formData = $(this).serialize();
+        const orderData = { items: orderItems };
+
+        $.ajax({
+            url: 'api/submit_order.php',
+            method: 'POST',
+            data: { ...formData, order: JSON.stringify(orderData) },
+            success: function () {
+                alert('訂單提交成功！');
+                location.reload();
+            },
+            error: function () {
+                alert('訂單提交失敗，請稍後再試。');
+            }
+        });
+    });
+
+    // 初始化
+    $(document).ready(function () {
+        loadMenu();
+    });
+</script>
 </html>

@@ -16,7 +16,7 @@
         <!-- 月曆 -->
         <div class="calendar-controls">
             <button id="prevMonth" class="calendar-btn"><< 前一個月</button>
-            <h2 id="currentMonth" class="calendar-title">2024年5月</h2>
+            <h2 id="currentMonth" class="calendar-title"></h2>
             <button id="nextMonth" class="calendar-btn">下一個月 >></button>
         </div>
         <div id="calendarGrid" class="calendar-grid"></div>
@@ -82,7 +82,7 @@
                 console.log(data)
                 const calendarGrid = $('#calendarGrid');
                 calendarGrid.empty();
-
+                $("#currentMonth").html(year + "年" +  month + "月")
                 data.forEach(day => {
                     const dayClass = day.available ? 'day available' : 'day unavailable';
                     calendarGrid.append(`

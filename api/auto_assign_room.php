@@ -4,7 +4,7 @@ include '../database/db_connect.php';
 $date = $_GET['date'];
 
 // 查找第一個可用房號
-$sql = "SELECT id FROM rooms 
+$sql = "SELECT id, name FROM rooms 
         WHERE id NOT IN (SELECT room_id FROM bookings WHERE date = ?) 
         LIMIT 1";
 $stmt = $conn->prepare($sql);
@@ -13,7 +13,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($row = $result->fetch_assoc()) {
-    echo $row['id'];
+    echo $row['name'];
 } else {
     http_response_code(400);
     echo "無可用房間";

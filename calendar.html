@@ -64,8 +64,12 @@
 </body>
 <script src="js/jquery-3.6.0.min.js"></script>
 <script>
-    $('.header').load('includes/header.html')
-    $('.footer').load('includes/footer.html')
+    // 初始化
+    $(document).ready(function () {
+        $('.header').load('includes/header.html')
+        $('.footer').load('includes/footer.html')
+        loadCalendar(currentYear, currentMonth);
+    });
     // 當前年月
     let currentYear = new Date().getFullYear();
     let currentMonth = new Date().getMonth() + 1;
@@ -79,19 +83,35 @@
             data: { year, month },
             dataType: 'json',
             success: function (data) {
-                console.log(data)
+                // console.log(data)
                 const calendarGrid = $('#calendarGrid');
                 calendarGrid.empty();
                 $("#currentMonth").html(year + "年" +  month + "月")
+                let html = ''
                 data.forEach(day => {
-                    const dayClass = day.available ? 'day available' : 'day unavailable';
-                    calendarGrid.append(`
+                    console.log(day)
+                    let dayClass = ''
+                    if(day.available){
+                        dayClass = 'day available'
+                    }else{
+                        dayClass = 'day unavailable'
+                    }
+
+                    html += `
                         <div class="${dayClass}" data-date="${day.date}">
                             <span class="day-number">${day.day}</span>
                             <span class="day-info">$${day.price} (${day.rooms}間)</span>
                         </div>
-                    `);
+                    `
+                    // calendarGrid.append(`
+                    //     <div class="${dayClass}" data-date="${day.date}">
+                    //         <span class="day-number">${day.day}</span>
+                    //         <span class="day-info">$${day.price} (${day.rooms}間)</span>
+                    //     </div>
+                    // `);
                 });
+
+                calendarGrid.html(html)
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('HTTP status code: ' + jqXHR.status + '\n' +
@@ -157,10 +177,6 @@
         });
     });
 
-    // 初始化
-    $(document).ready(function () {
-        loadCalendar(currentYear, currentMonth);
-    });
 
     // 自動產生房號
     $('#autoAssignRoom').on('click', function () {

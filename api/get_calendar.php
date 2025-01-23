@@ -4,14 +4,18 @@ include '../database/db_connect.php';
 // 獲取年份和月份
 $year = $_GET['year'];
 $month = $_GET['month'];
+// 每個月的第一天
 $firstDay = "{$year}-{$month}-01";
+// 每個月的最後一天
 $lastDay = date("Y-m-t", strtotime($firstDay));
-
-// 預設返回的每一天資料
+// 每個月有幾天
 $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+
+// 要output的陣列
 $calendar = [];
-$roomCounts = [1,2,3,4,5,6,7,8,9];
+$roomCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 $priceCounts = [1000, 2000, 3000, 5000];
+
 for ($day = 1; $day <= $daysInMonth; $day++) {
     $date = sprintf('%04d-%02d-%02d', $year, $month, $day);
     $calendar[$date] = [

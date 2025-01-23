@@ -15,7 +15,7 @@ if ($stmt->execute()) {
     http_response_code(200);
     echo "訂房成功";
 } else {
-    http_response_code(500);
+    http_response_code(400);
     echo "訂房失敗";
 }
 

@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>訪客訂餐 - 快樂旅遊網</title>
     <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
-    <link href="css/multiColumnTemplate.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="css/styles.css" rel="stylesheet" >
 </head>
 <body>
     <div class="header"></div>
@@ -65,10 +64,13 @@
 </body>
 <script src="js/jquery-3.6.0.min.js"></script>
 <script>
-    $('.header').load('includes/header.html')
-    $('.footer').load('includes/footer.html')
+    // 初始化
+    $(document).ready(function () {
+        $('.header').load('includes/header.html')
+        $('.footer').load('includes/footer.html')
+        loadMenu();
+    });
     let orderItems = []; // 儲存訂單內容
-
     // 加載菜單
     function loadMenu() {
         $.ajax({
@@ -176,9 +178,5 @@
         });
     });
 
-    // 初始化
-    $(document).ready(function () {
-        loadMenu();
-    });
 </script>
 </html>

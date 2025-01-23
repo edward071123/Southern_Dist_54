@@ -1,15 +1,16 @@
 <?php
-session_start();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    if ($username == 'admin' && $password == '1234') {
-        $_SESSION['logged_in'] = true;
-        header('Location: admin/dashboard.php');
-    } else {
-        $error = "帳號或密碼錯誤！";
+    session_start();
+    unset($_SESSION['logged_in']); 
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        if ($username == 'admin' && $password == '1234') {
+            $_SESSION['logged_in'] = true;
+            header('Location: admin/manage_comments.php');
+        } else {
+            $error = "帳號或密碼錯誤！";
+        }
     }
-}
 ?>
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -17,8 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <title>管理登入 - 快樂旅遊網</title>
     <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
-    <link href="css/multiColumnTemplate.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="css/styles.css" rel="stylesheet" >
 </head>
 <body>
     <div class="header"></div>
@@ -37,7 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </body>
 <script src="js/jquery-3.6.0.min.js"></script>
 <script>
-    $('.header').load('includes/header.html')
-    $('.footer').load('includes/footer.html')
+    // 初始化
+    $(document).ready(function () {
+        $('.header').load('includes/header.html')
+        $('.footer').load('includes/footer.html')
+    });
 </script>
 </html>

@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>訪客留言列表 - 快樂旅遊網</title>
     <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
-    <link href="css/multiColumnTemplate.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="css/styles.css" rel="stylesheet" >
 </head>
 <body>
     <div class="header"></div>
@@ -48,8 +47,12 @@
 </body>
 <script src="js/jquery-3.6.0.min.js"></script>
 <script>
-    $('.header').load('includes/header.html')
-    $('.footer').load('includes/footer.html')
+   // 初始化
+    $(document).ready(function () {
+        $('.header').load('includes/header.html')
+        $('.footer').load('includes/footer.html')
+        loadMessages();
+    })
     // 加載留言
     function loadMessages() {
         $.ajax({
@@ -95,28 +98,24 @@
 
     // 提交留言
     $('#messageForm').on('submit', function (event) {
-        event.preventDefault();
-        const formData = $(this).serialize();
+        alert('留言成功！');
+        // event.preventDefault();
+        // const formData = $(this).serialize();
 
-        $.ajax({
-            url: 'api/post_message.php',
-            method: 'POST',
-            data: formData,
-            success: function () {
-                alert('留言成功！');
-                loadMessages();
-                $('#newMessageForm').hide();
-                $('#messageForm')[0].reset();
-            },
-            error: function () {
-                alert('提交留言失敗，請稍後再試。');
-            }
-        });
-    });
-
-    // 初始化
-    $(document).ready(function () {
-        loadMessages();
+        // $.ajax({
+        //     url: 'api/post_message.php',
+        //     method: 'POST',
+        //     data: formData,
+        //     success: function () {
+        //         alert('留言成功！');
+        //         loadMessages();
+        //         $('#newMessageForm').hide();
+        //         $('#messageForm')[0].reset();
+        //     },
+        //     error: function () {
+        //         alert('提交留言失敗，請稍後再試。');
+        //     }
+        // });
     });
 </script>
 </html>

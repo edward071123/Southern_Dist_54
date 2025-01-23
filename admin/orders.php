@@ -18,7 +18,7 @@
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">
-            <h1>管理後台</h1>
+            <h1>管理後台-訂單管理</h1>
             <p>歡迎，<?= htmlspecialchars($_SESSION['admin_username']) ?></p>
             <nav>
                 <ul>
@@ -31,9 +31,7 @@
             </nav>
         </aside>
         <main class="main-content">
-            <!-- Dashboard Content -->
-            <h2>總覽</h2>
-            <p>這是您的後台控制面板。</p>
+            <h2>訂單管理頁面</h2>
         </main>
     </div>
 </body>

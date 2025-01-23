@@ -1,14 +1,26 @@
 <?php
     session_start();
-    unset($_SESSION['logged_in']); 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
+        header('Location: admin_dashboard.php');
+        exit();
+    }
+
+    // 模擬登入用戶名與密碼
+    $admin_username = 'admin';
+    $admin_password = 'password123';
+
+    $error = '';
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $_POST['username'];
         $password = $_POST['password'];
-        if ($username == 'admin' && $password == '1234') {
-            $_SESSION['logged_in'] = true;
-            header('Location: admin/manage_comments.php');
+
+        if ($username === $admin_username && $password === $admin_password) {
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_username'] = $username;
+            header('Location: admin_dashboard.php');
+            exit();
         } else {
-            $error = "帳號或密碼錯誤！";
+            $error = '登入失敗，請檢查帳號或密碼。';
         }
     }
 ?>

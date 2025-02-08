@@ -101,7 +101,7 @@
         const id = $(this).data('id');
         const name = $(this).data('name');
         const price = parseFloat($(this).data('price'));
-
+        console.log('orderItems', orderItems)
         const existingItem = orderItems.find(item => item.id === id);
         if (existingItem) {
             existingItem.quantity += 1;
@@ -167,10 +167,11 @@
         $.ajax({
             url: 'api/submit_order.php',
             method: 'POST',
+            dataType: 'json',
             data: { ...formData, order: JSON.stringify(orderData) },
             success: function () {
                 alert('訂單提交成功！');
-                location.reload();
+                // location.reload();
             },
             error: function () {
                 alert('訂單提交失敗，請稍後再試。');

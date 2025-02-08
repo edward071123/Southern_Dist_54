@@ -18,8 +18,7 @@ CREATE TABLE bookings (
     email VARCHAR(100),
     phone VARCHAR(20),
     date DATE,
-    room_id INT,
-    FOREIGN KEY (room_id) REFERENCES rooms(id)
+    room_id INT
 );
 
 
@@ -43,7 +42,5 @@ CREATE TABLE order_items (
     order_id INT NOT NULL,
     menu_id INT NOT NULL,
     quantity INT NOT NULL,
-    subtotal INT NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(id),
-    FOREIGN KEY (menu_id) REFERENCES menu(id)
+    subtotal INT NOT NULL
 );

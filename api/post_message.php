@@ -6,6 +6,14 @@ $email = $_POST['email'];
 $phone = $_POST['phone'];
 $content = $_POST['content'];
 
+// 檢查php端是否收到正確的輸入資料
+// echo json_encode([
+//     "name" => $name,
+//     "email" => $email,
+//     "phone" => $phone,
+//     "content" => $content,
+// ]);
+
 // 插入留言到資料庫
 $sql = "INSERT INTO messages (name, email, phone, content) VALUES (?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);

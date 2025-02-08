@@ -76,7 +76,7 @@
                             </div>
                             <div class="message-actions">
                                 <span>留言序號：(${message.id})</span>
-                                <button class="edit-btn">編輯</button>
+                                <button class="edit-btn" data-id="${message.id}">編輯</button>
                                 <button class="delete-btn" data-id="${message.id}">刪除</button>
                             </div>
                         </div>
@@ -89,8 +89,53 @@
         });
     }
 
+    // 刪除留言表單
+    $(document).on("click",".delete-btn",function() {
+        console.log($(this).data('id'))
+        const getid = $(this).data('id')
+        //api/delete_message.php?id=123
+        $.ajax({
+            url: 'api/delete_message.php?id='+ getid,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                loadMessages();
+            },
+            error: function () {
+                alert('無法刪除留言，請稍後再試。');
+            }
+        });
+    });
+
+    let editId = 0
+    // 顯示更新留言表單
+    $(document).on("click",".edit-btn",function() {
+        console.log($(this).data('id'))
+        const getid = $(this).data('id')
+        $.ajax({
+            url: 'api/get_message_on.php?id='+ getid,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                $("#name").val(data[0].name)
+                $("#email").val(data[0].email)
+                $("#phone").val(data[0].phone)
+                $("#content").val(data[0].content)
+                $('#newMessageForm').show();
+                editId = getid
+            },
+            error: function () {
+                alert('無法取得單一留言，請稍後再試。');
+            }
+        });
+    });
+
+
     // 顯示新增留言表單
     $('#addMessageBtn').on('click', function () {
+        editId = 0
         $('#newMessageForm').show();
     });
 
@@ -101,14 +146,13 @@
 
     // 提交留言
     $('#sendBtn').on('click', function (event) {
-        // alert('留言成功！');
         event.preventDefault();
-       
         let data = {
             name: $("#name").val(), 
             email: $("#email").val(), 
             phone: $("#phone").val(), 
             content: $("#content").val(), 
+            id: editId,
         }
         console.log(data)
         $.ajax({
@@ -121,6 +165,7 @@
                 loadMessages();
                 $('#newMessageForm').hide();
                 $('#messageForm')[0].reset();
+                editId = 0
             },
             error: function () {
                 alert('提交留言失敗，請稍後再試。');

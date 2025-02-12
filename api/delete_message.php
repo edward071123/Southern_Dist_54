@@ -1,10 +1,10 @@
 <?php
 include '../database/db_connect.php';
 
-$id = $_GET['id'];
+$id     = $_GET['id'];
 
-$sql = "DELETE FROM `messages` WHERE `id` = ?";
-$stmt = $conn->prepare($sql);
+$sql    = "DELETE FROM `messages` WHERE `id` = ?";
+$stmt   = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
 
 if ($stmt->execute()) {

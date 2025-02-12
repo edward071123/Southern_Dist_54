@@ -1,20 +1,32 @@
 <?php
+    include 'database/db_connect.php';
     session_start();
     if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in']) {
         header('Location: admin/dashboard.php');
         exit();
     }
 
-    // 模擬登入用戶名與密碼
-    $admin_username = 'admin';
-    $admin_password = 'password123';
+    
 
     $error = '';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        if ($username === $admin_username && $password === $admin_password) {
+        // 資料庫準備比對登入用戶名與密碼
+        $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $username, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $users = [];
+        while ($row = $result->fetch_assoc()) {
+            $users[] = ['id' => $row['id'], 'username' => $row['username']];
+        }
+        $error = count($users);
+        echo '<script>alert('.$error .')</script>';
+        if (count($users) === 1) {
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_username'] = $username;
             header('Location: admin/dashboard.php');

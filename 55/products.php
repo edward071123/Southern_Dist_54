@@ -162,5 +162,29 @@ if (!isset($_SESSION["admin"])) {
 <script src="js/bootstrap.js"></script>
 <!-- jQuery UI JS -->
 <script src="js/jquery-ui.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#addProductForm").on("submit", function(e) {
+            e.preventDefault(); // 防止表單自動提交
 
+            let formData = new FormData(this); // 建立 FormData 物件來處理檔案上傳
+
+            $.ajax({
+                url: "insert_product.php", // 指向 PHP 處理文件
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    alert(response); // 顯示回應訊息
+                    $("#addProductModal").modal("hide"); // 關閉模態窗
+                    location.reload(); // 重新整理頁面以更新列表
+                },
+                error: function() {
+                    alert("產品新增失敗，請再試一次！");
+                }
+            });
+        });
+    });
+</script>
 </html>

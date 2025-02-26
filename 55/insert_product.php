@@ -1,5 +1,5 @@
 <?php
-require "db.php"; // 資料庫連線
+require "database/db_connect.php"; // 資料庫連線
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 解析 JSON 數據

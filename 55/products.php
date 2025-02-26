@@ -161,6 +161,42 @@ if (!isset($_SESSION["admin"])) {
 <script src="js/jquery-ui.js"></script>
 <script>
     $(document).ready(function() {
+
+        // 初次載入產品列表
+        loadProducts();
+
+        // AJAX 載入產品列表
+        function loadProducts() {
+            $.ajax({
+                url: "get_products.php",
+                type: "GET",
+                dataType: "json",
+                success: function(response) {
+                    let productHTML = "";
+                    response.forEach(function(product) {
+                        productHTML += `
+                            <tr>
+                                <td>\${product.name}</td>
+                                <td>\${product.name_en}</td>
+                                <td>\${product.gtin}</td>
+                                <td>\${product.description}</td>
+                                <td>\${product.description_en}</td>
+                                <td>\${product.status === "visible" ? "顯示" : "隱藏"}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm">編輯</button>
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal">刪除</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    $("#productTableBody").html(productHTML);
+                },
+                error: function() {
+                    alert("無法加載產品列表！");
+                }
+            });
+        }
+        
         $("#submitProduct").click(function() {
             let productData = {
                 productName: $("#productName").val(),

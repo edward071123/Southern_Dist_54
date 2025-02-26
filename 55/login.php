@@ -45,6 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <img src="images/logo.png" class="img-fluid d-block mx-auto" alt="TWAIA Logo" width="160" height="90">
             </div>
             <div class="col-md-8 py-3 h4">臺灣人工智慧公會(TWAIA, Taiwan Artificial Intelligence Association)</div>
+            <div class="col-md-2 py-3">
+                <a href="index.php" class="btn btn-danger btn-sm">回到首頁</a>
+            </div>
         </div>
 
 

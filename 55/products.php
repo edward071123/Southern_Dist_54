@@ -170,8 +170,8 @@ if (!isset($_SESSION["admin"])) {
                                 <td>${product.description}</td>
                                 <td>${product.description_en}</td>
                                 <td>
-                                    <input type="radio" name="productStatus_${product.id}" data-id="${product.id}" value="visible" ${product.status === "visible" ? "checked" : ""}> 顯示
-                                    <input type="radio" name="productStatus_${product.id}" data-id="${product.id}" value="hidden" ${product.status === "hidden" ? "checked" : ""}> 隱藏
+                                    <input type="radio" class="updateStatus" name="productStatus_${product.id}" data-id="${product.id}" value="visible" ${product.status === "visible" ? "checked" : ""}> 顯示
+                                    <input type="radio" class="updateStatus" name="productStatus_${product.id}" data-id="${product.id}" value="hidden" ${product.status === "hidden" ? "checked" : ""}> 隱藏
                                 </td>
                                 <td>
                                     <button class="btn btn-warning btn-sm">編輯</button>

@@ -68,7 +68,7 @@ if (!isset($_SESSION["admin"])) {
                             <td>
                                 <!-- 操作欄位：編輯、刪除按鈕 -->
                                 <a href="/admin/product/123/edit" class="btn btn-primary btn-sm">編輯</a>
-                                <button class="btn btn-danger btn-sm" data-target="#confirmDeleteModal">刪除</button>
+                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">刪除</button>
                             </td>
                         </tr>
                     </tbody>

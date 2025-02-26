@@ -163,7 +163,7 @@ if (!isset($_SESSION["admin"])) {
                     response.forEach(function(product) {
                         productHTML += `
                             <tr>
-                                <td><img src="${product.image}" alt="產品圖片" class="img-thumbnail" width="100"></td>
+                                <td><img src="uploads/${product.image}" alt="產品圖片" class="img-thumbnail" width="100"></td>
                                 <td>${product.name}</td>
                                 <td>${product.name_en}</td>
                                 <td>${product.gtin}</td>

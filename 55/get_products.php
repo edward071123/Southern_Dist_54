@@ -3,7 +3,7 @@ require "database/db_connect.php"; // 資料庫連線
 
 header("Content-Type: application/json"); // 設定回傳 JSON 格式
 
-$sql = "SELECT id, name, name_en, gtin, description, description_en, status FROM products ORDER BY created_at DESC";
+$sql = "SELECT id, image, name, name_en, gtin, description, description_en, status FROM products ORDER BY created_at DESC";
 $result = $conn->query($sql);
 
 $products = [];

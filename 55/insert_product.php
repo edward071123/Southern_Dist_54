@@ -1,12 +1,6 @@
 <?php
 require "database/db_connect.php"; // 資料庫連線
 
-// 確保管理員登入
-if (!isset($_SESSION["admin"])) {
-    http_response_code(403);
-    echo "未授權的操作";
-    exit();
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 解析 JSON 數據

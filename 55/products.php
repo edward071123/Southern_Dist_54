@@ -170,8 +170,8 @@ if (!isset($_SESSION["admin"])) {
                                 <td>${product.description}</td>
                                 <td>${product.description_en}</td>
                                 <td>
-                                    <input type="radio" name="productStatus_${product.id}" value="visible" ${product.status === "visible" ? "checked" : ""}> 顯示
-                                    <input type="radio" name="productStatus_${product.id}" value="hidden" ${product.status === "hidden" ? "checked" : ""}> 隱藏
+                                    <input type="radio" name="productStatus_${product.id}" data-id="${product.id}" value="visible" ${product.status === "visible" ? "checked" : ""}> 顯示
+                                    <input type="radio" name="productStatus_${product.id}" data-id="${product.id}" value="hidden" ${product.status === "hidden" ? "checked" : ""}> 隱藏
                                 </td>
                                 <td>
                                     <button class="btn btn-warning btn-sm">編輯</button>
@@ -187,6 +187,24 @@ if (!isset($_SESSION["admin"])) {
                 }
             });
         }
+
+        // 監聽 radio button 狀態變更，並使用 AJAX 更新 status
+        $(document).on("change", ".updateStatus", function() {
+            let productId = $(this).data("id");
+            let newStatus = $(this).val();
+            
+            $.ajax({
+                url: "update_product_status.php",
+                type: "POST",
+                data: { id: productId, status: newStatus },
+                success: function(response) {
+                    alert("產品狀態更新成功！");
+                },
+                error: function() {
+                    alert("產品狀態更新失敗！");
+                }
+            });
+        });
         
         $("#submitProduct").click(function() {
             let productData = {

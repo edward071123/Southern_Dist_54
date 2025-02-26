@@ -2,12 +2,21 @@
 require "db.php"; // 資料庫連線
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST["productName"];
-    $name_en = $_POST["productNameEn"];
-    $gtin = $_POST["gtin"];
-    $description = $_POST["productDesc"];
-    $description_en = $_POST["productDescEn"];
-    $status = $_POST["status"];
+    // 解析 JSON 數據
+    $productData = json_decode($_POST["data"], true);
+
+    // 確保 JSON 解析成功
+    if (!$productData) {
+        echo "JSON 解析失敗！";
+        exit;
+    }
+
+    $name = $productData["productName"];
+    $name_en = $productData["productNameEn"];
+    $gtin = $productData["gtin"];
+    $description = $productData["productDesc"];
+    $description_en = $productData["productDescEn"];
+    $status = $productData["status"];
 
     // 預設圖片名稱
     $image = "default.png";
@@ -17,6 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_dir = "uploads/";
         $image = time() . "_" . basename($_FILES["productImage"]["name"]);
         $target_file = $target_dir . $image;
+
+        // 確保 `uploads/` 目錄可寫入
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
 
         // 移動上傳的文件
         if (!move_uploaded_file($_FILES["productImage"]["tmp_name"], $target_file)) {

@@ -6,9 +6,9 @@
     <title>臺灣人工智慧公會</title>
 
     <!-- Bootstrap 4 CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <!-- jQuery UI CSS -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-8 py-3 h4">臺灣人工智慧公會(TWAIA, Taiwan Artificial Intelligence Association)</div>
         <div class="col-md-2 py-3">
-            <a href="login.php" class="btn btn-success btn-sm">管理</a>
+            <a href="dashboard.php" class="btn btn-success btn-sm">進入管理畫面</a>
         </div>
     </div>
 
@@ -53,24 +53,12 @@
     </div>
 </div>
 
-<!-- jQuery & Bootstrap 4 JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- jQuery UI JS -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<script>
-    $(document).ready(function() {
-        // 管理按鈕點擊效果
-        $("#manage-btn").click(function() {
-            alert("管理功能尚未開發");
-        });
-
-        // jQuery UI - 讓相片可拖曳
-        $("#photo-slider img").draggable();
-    });
-</script>
-
 </body>
+
+<!-- jQuery & Bootstrap 4 JS -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<!-- jQuery UI JS -->
+<script src="js/jquery-ui.js"></script>
+
 </html>

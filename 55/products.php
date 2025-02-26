@@ -64,7 +64,7 @@ if (!isset($_SESSION["admin"])) {
                             <td>
                                 <input type="radio" name="productStatus1" value="visible" checked> 顯示
                                 <input type="radio" name="productStatus1" value="hidden"> 隱藏
-                            </td>`
+                            </td>
                             <td>
                                 <a href="#" class="btn btn-warning btn-sm">編輯</a>
                                 <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal">刪除</button>
@@ -181,7 +181,10 @@ if (!isset($_SESSION["admin"])) {
                                 <td>${product.gtin}</td>
                                 <td>${product.description}</td>
                                 <td>${product.description_en}</td>
-                                <td>${product.status === "visible" ? "顯示" : "隱藏"}</td>
+                                <td>
+                                    <input type="radio" name="productStatus_${product.id}" value="visible" ${product.status === "visible" ? "checked" : ""}> 顯示
+                                    <input type="radio" name="productStatus_${product.id}" value="hidden" ${product.status === "hidden" ? "checked" : ""}> 隱藏
+                                </td>
                                 <td>
                                     <button class="btn btn-warning btn-sm">編輯</button>
                                     <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal">刪除</button>

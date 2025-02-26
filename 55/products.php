@@ -176,12 +176,12 @@ if (!isset($_SESSION["admin"])) {
                     response.forEach(function(product) {
                         productHTML += `
                             <tr>
-                                <td>\${product.name}</td>
-                                <td>\${product.name_en}</td>
-                                <td>\${product.gtin}</td>
-                                <td>\${product.description}</td>
-                                <td>\${product.description_en}</td>
-                                <td>\${product.status === "visible" ? "顯示" : "隱藏"}</td>
+                                <td>${product.name}</td>
+                                <td>${product.name_en}</td>
+                                <td>${product.gtin}</td>
+                                <td>${product.description}</td>
+                                <td>${product.description_en}</td>
+                                <td>${product.status === "visible" ? "顯示" : "隱藏"}</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm">編輯</button>
                                     <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal">刪除</button>

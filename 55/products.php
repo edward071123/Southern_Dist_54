@@ -87,43 +87,40 @@ if (!isset($_SESSION["admin"])) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="addProductForm" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="productName">產品名稱 (中文)</label>
-                                <input type="text" class="form-control" id="productName" name="productName" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="productNameEn">產品名稱 (英文)</label>
-                                <input type="text" class="form-control" id="productNameEn" name="productNameEn" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="gtin">GTIN</label>
-                                <input type="text" class="form-control" id="gtin" name="gtin" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="productDesc">描述 (中文)</label>
-                                <textarea class="form-control" id="productDesc" name="productDesc" rows="3" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="productDescEn">描述 (英文)</label>
-                                <textarea class="form-control" id="productDescEn" name="productDescEn" rows="3" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>產品狀態</label><br>
-                                <input type="radio" name="status" value="visible" checked> 顯示
-                                <input type="radio" name="status" value="hidden"> 隱藏
-                            </div>
-                            <div class="form-group">
-                                <label for="productImage">上傳產品圖片</label>
-                                <input type="file" class="form-control-file" id="productImage" name="productImage">
-                            </div>
-                            <button type="submit" class="btn btn-primary">新增</button>
-                        </form>
+                        <div class="form-group">
+                            <label for="productName">產品名稱 (中文)</label>
+                            <input type="text" class="form-control" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productNameEn">產品名稱 (英文)</label>
+                            <input type="text" class="form-control" id="productNameEn" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gtin">GTIN</label>
+                            <input type="text" class="form-control" id="gtin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDesc">描述 (中文)</label>
+                            <textarea class="form-control" id="productDesc" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDescEn">描述 (英文)</label>
+                            <textarea class="form-control" id="productDescEn" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>產品狀態</label><br>
+                            <input type="radio" name="status" value="visible" checked> 顯示
+                            <input type="radio" name="status" value="hidden"> 隱藏
+                        </div>
+                        <div class="form-group">
+                            <label for="productImage">上傳產品圖片</label>
+                            <input type="file" class="form-control-file" id="productImage">
+                        </div>
+                        <button id="submitProduct" class="btn btn-primary">新增</button>
                     </div>
                 </div>
             </div>
         </div>
-
 
         <!-- 刪除確認模態窗 -->
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
@@ -164,21 +161,33 @@ if (!isset($_SESSION["admin"])) {
 <script src="js/jquery-ui.js"></script>
 <script>
     $(document).ready(function() {
-        $("#addProductForm").on("submit", function(e) {
-            e.preventDefault(); // 防止表單自動提交
+        $("#submitProduct").click(function() {
+            let productData = {
+                productName: $("#productName").val(),
+                productNameEn: $("#productNameEn").val(),
+                gtin: $("#gtin").val(),
+                productDesc: $("#productDesc").val(),
+                productDescEn: $("#productDescEn").val(),
+                status: $("input[name='status']:checked").val()
+            };
 
-            let formData = new FormData(this); // 建立 FormData 物件來處理檔案上傳
+            let formData = new FormData();
+            formData.append("data", JSON.stringify(productData));
+            let imageFile = $("#productImage")[0].files[0];
+            if (imageFile) {
+                formData.append("productImage", imageFile);
+            }
 
             $.ajax({
-                url: "insert_product.php", // 指向 PHP 處理文件
+                url: "insert_product.php",
                 type: "POST",
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    alert(response); // 顯示回應訊息
-                    $("#addProductModal").modal("hide"); // 關閉模態窗
-                    location.reload(); // 重新整理頁面以更新列表
+                    alert(response);
+                    $("#addProductModal").modal("hide");
+                    location.reload();
                 },
                 error: function() {
                     alert("產品新增失敗，請再試一次！");

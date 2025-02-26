@@ -14,7 +14,7 @@ if (!isset($_SESSION["admin"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>臺灣人工智慧公會 - 會員公司列表</title>
+    <title>臺灣人工智慧公會 - 會員產品列表</title>
 
     <!-- Bootstrap 4 CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -31,38 +31,38 @@ if (!isset($_SESSION["admin"])) {
             <div class="col-md-8 py-3 h4">臺灣人工智慧公會(TWAIA, Taiwan Artificial Intelligence Association)</div>
             <div class="col-md-2 py-3">
                 <a href="dashboard.php" class="btn btn-primary btn-sm">管理面板首頁</a>
-                <a href="products.php" class="btn btn-info btn-sm">管理會員產品</a>
+                <a href="companies.php" class="btn btn-primary btn-sm">管理會員公司</a>
                 <a href="logout.php" class="btn btn-danger btn-sm">登出</a>
             </div>
         </div>
 
 
-        <!-- 第三列: 內容區 -->
+        <!-- 第三列: 產品管理 -->
         <div class="row bg-light text-center py-5">
             <div class="col-12">
-                <h2 class="text-primary">會員公司列表</h2>
-                <button class="btn btn-success mb-3" data-toggle="modal" data-target="#addCompanyModal">新增會員公司</button>
+                <h2 class="text-primary">產品管理</h2>
+                <button class="btn btn-success mb-3" data-toggle="modal" data-target="#addProductModal">新增產品</button>
                 <table class="table table-bordered">
                     <thead class="thead-dark">
                         <tr>
-                            <th>公司名稱</th>
-                            <th>地址</th>
-                            <th>電話號碼</th>
-                            <th>電子郵件</th>
-                            <th>擁有者姓名</th>
+                            <th>產品名稱 (中文)</th>
+                            <th>產品名稱 (英文)</th>
+                            <th>GTIN</th>
+                            <th>描述 (中文)</th>
+                            <th>描述 (英文)</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>示範公司</td>
-                            <td>台北市信義區</td>
-                            <td>02-1234-5678</td>
-                            <td>demo@example.com</td>
-                            <td>王小明</td>
+                            <td>示範產品</td>
+                            <td>Demo Product</td>
+                            <td>1234567890123</td>
+                            <td>這是一個示範產品。</td>
+                            <td>This is a demo product.</td>
                             <td>
                                 <a href="#" class="btn btn-warning btn-sm">編輯</a>
-                                <a href="#" class="btn btn-danger btn-sm">停用</a>
+                                <a href="#" class="btn btn-danger btn-sm">刪除</a>
                             </td>
                         </tr>
                     </tbody>
@@ -70,12 +70,12 @@ if (!isset($_SESSION["admin"])) {
             </div>
         </div>
 
-        <!-- 新增會員公司 Modal -->
-        <div class="modal fade" id="addCompanyModal" tabindex="-1" role="dialog" aria-labelledby="addCompanyModalLabel" aria-hidden="true">
+        <!-- 新增產品 Modal -->
+        <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addCompanyModalLabel">新增會員公司</h5>
+                        <h5 class="modal-title" id="addProductModalLabel">新增產品</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -83,24 +83,24 @@ if (!isset($_SESSION["admin"])) {
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label for="companyName">公司名稱</label>
-                                <input type="text" class="form-control" id="companyName" required>
+                                <label for="productName">產品名稱 (中文)</label>
+                                <input type="text" class="form-control" id="productName" required>
                             </div>
                             <div class="form-group">
-                                <label for="companyAddress">公司地址</label>
-                                <input type="text" class="form-control" id="companyAddress" required>
+                                <label for="productNameEn">產品名稱 (英文)</label>
+                                <input type="text" class="form-control" id="productNameEn" required>
                             </div>
                             <div class="form-group">
-                                <label for="companyPhone">公司電話號碼</label>
-                                <input type="text" class="form-control" id="companyPhone" required>
+                                <label for="gtin">GTIN</label>
+                                <input type="text" class="form-control" id="gtin" required>
                             </div>
                             <div class="form-group">
-                                <label for="companyEmail">公司電子郵件</label>
-                                <input type="email" class="form-control" id="companyEmail" required>
+                                <label for="productDesc">描述 (中文)</label>
+                                <textarea class="form-control" id="productDesc" rows="3" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="companyOwner">擁有者姓名</label>
-                                <input type="text" class="form-control" id="companyOwner" required>
+                                <label for="productDescEn">描述 (英文)</label>
+                                <textarea class="form-control" id="productDescEn" rows="3" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">新增</button>
                         </form>

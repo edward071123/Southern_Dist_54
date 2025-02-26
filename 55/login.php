@@ -49,15 +49,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         <!-- 第三列: 內容區 -->
-        <div class="row bg-light text-center">
-            <?php if (isset($error)) echo "<p style='color: red;'>$error</p>"; ?>
-            <form method="POST">
-                <input type="text" name="username" placeholder="帳號" required><br>
-                <input type="password" name="password" placeholder="密碼" required><br>
-                <button type="submit">登入</button>
-            </form>
+        <div class="row bg-light text-center py-5">
+            <div class="col-12">
+                <h2 class="text-primary">管理員登入</h2>
+                <p class="lead">請輸入您的帳號和密碼以登入管理系統。</p>
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <form method="POST">
+                                    <div class="form-group">
+                                        <label for="username">帳號</label>
+                                        <input type="text" id="username" name="username" class="form-control" placeholder="請輸入帳號" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">密碼</label>
+                                        <input type="password" id="password" name="password" class="form-control" placeholder="請輸入密碼" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-block">登入</button>
+                                    <?php if (isset($error)) echo "<p class='text-danger mt-2'>$error</p>"; ?>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
         <!-- 第四列: 頁尾 -->
         <div class="row bg-dark text-white text-center">
             <div class="col-12 py-3">

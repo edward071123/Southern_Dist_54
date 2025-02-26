@@ -50,6 +50,7 @@ if (!isset($_SESSION["admin"])) {
                             <th>GTIN</th>
                             <th>描述 (中文)</th>
                             <th>描述 (英文)</th>
+                            <th>狀態</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -61,8 +62,16 @@ if (!isset($_SESSION["admin"])) {
                             <td>這是一個示範產品。</td>
                             <td>This is a demo product.</td>
                             <td>
-                                <a href="#" class="btn btn-warning btn-sm">編輯</a>
-                                <a href="#" class="btn btn-danger btn-sm">刪除</a>
+                                <!-- 狀態欄位：顯示綠色「顯示」標籤和切換按鈕 -->
+                                <span class="badge bg-success">顯示</span>
+                                <button class="btn btn-sm btn-outline-secondary" title="點擊以隱藏產品">
+                                <i class="bi bi-eye-slash"></i> <!-- Bootstrap Icons 或 FontAwesome的眼睛圖示 -->
+                                </button>
+                            </td>
+                            <td>
+                                <!-- 操作欄位：編輯、刪除按鈕 -->
+                                <a href="/admin/product/123/edit" class="btn btn-primary btn-sm">編輯</a>
+                                <button class="btn btn-danger btn-sm" onclick="return confirm('確定要刪除此產品嗎？');">刪除</button>
                             </td>
                         </tr>
                     </tbody>
@@ -109,6 +118,24 @@ if (!isset($_SESSION["admin"])) {
             </div>
         </div>
 
+        <!-- 刪除確認模態窗 -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel">確認刪除</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                您確定要刪除此產品嗎？此操作無法復原。
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="deleteConfirmBtn">確定刪除</button>
+            </div>
+            </div>
+        </div>
+        </div>
 
         <!-- 第四列: 頁尾 -->
         <div class="row bg-dark text-white text-center">

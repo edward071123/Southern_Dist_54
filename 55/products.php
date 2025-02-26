@@ -62,12 +62,9 @@ if (!isset($_SESSION["admin"])) {
                             <td>這是一個示範產品。</td>
                             <td>This is a demo product.</td>
                             <td>
-                                <!-- 狀態欄位：顯示綠色「顯示」標籤和切換按鈕 -->
-                                <span class="badge bg-success">顯示</span>
-                                <button class="btn btn-sm btn-outline-secondary" title="點擊以隱藏產品">
-                                <i class="bi bi-eye-slash"></i> <!-- Bootstrap Icons 或 FontAwesome的眼睛圖示 -->
-                                </button>
-                            </td>
+                                <input type="radio" name="productStatus1" value="visible" checked> 顯示
+                                <input type="radio" name="productStatus1" value="hidden"> 隱藏
+                            </td>`
                             <td>
                                 <!-- 操作欄位：編輯、刪除按鈕 -->
                                 <a href="/admin/product/123/edit" class="btn btn-primary btn-sm">編輯</a>

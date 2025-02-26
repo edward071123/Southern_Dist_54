@@ -76,6 +76,7 @@ if (!isset($_SESSION["admin"])) {
         </div>
 
         <!-- 新增產品 Modal -->
+
         <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -86,26 +87,35 @@ if (!isset($_SESSION["admin"])) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form id="addProductForm" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="productName">產品名稱 (中文)</label>
-                                <input type="text" class="form-control" id="productName" required>
+                                <input type="text" class="form-control" id="productName" name="productName" required>
                             </div>
                             <div class="form-group">
                                 <label for="productNameEn">產品名稱 (英文)</label>
-                                <input type="text" class="form-control" id="productNameEn" required>
+                                <input type="text" class="form-control" id="productNameEn" name="productNameEn" required>
                             </div>
                             <div class="form-group">
                                 <label for="gtin">GTIN</label>
-                                <input type="text" class="form-control" id="gtin" required>
+                                <input type="text" class="form-control" id="gtin" name="gtin" required>
                             </div>
                             <div class="form-group">
                                 <label for="productDesc">描述 (中文)</label>
-                                <textarea class="form-control" id="productDesc" rows="3" required></textarea>
+                                <textarea class="form-control" id="productDesc" name="productDesc" rows="3" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="productDescEn">描述 (英文)</label>
-                                <textarea class="form-control" id="productDescEn" rows="3" required></textarea>
+                                <textarea class="form-control" id="productDescEn" name="productDescEn" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>產品狀態</label><br>
+                                <input type="radio" name="status" value="visible" checked> 顯示
+                                <input type="radio" name="status" value="hidden"> 隱藏
+                            </div>
+                            <div class="form-group">
+                                <label for="productImage">上傳產品圖片</label>
+                                <input type="file" class="form-control-file" id="productImage" name="productImage">
                             </div>
                             <button type="submit" class="btn btn-primary">新增</button>
                         </form>
@@ -113,6 +123,7 @@ if (!isset($_SESSION["admin"])) {
                 </div>
             </div>
         </div>
+
 
         <!-- 刪除確認模態窗 -->
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">

@@ -30,7 +30,7 @@ if (!isset($_SESSION["admin"])) {
             </div>
             <div class="col-md-8 py-3 h4">臺灣人工智慧公會(TWAIA, Taiwan Artificial Intelligence Association)</div>
             <div class="col-md-2 py-3">
-                <a href="dashboard.php" class="btn btn-primary btn-sm">管理面板首頁</a>
+                <a href="dashboard.php" class="btn btn-success btn-sm">管理面板首頁</a>
                 <a href="companies.php" class="btn btn-primary btn-sm">管理會員公司</a>
                 <a href="logout.php" class="btn btn-danger btn-sm">登出</a>
             </div>

@@ -54,8 +54,8 @@ if (!isset($_SESSION["admin"])) {
                             <th>操作</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="productTableBody">
+                        <!-- <tr>
                             <td>示範產品</td>
                             <td>Demo Product</td>
                             <td>1234567890123</td>
@@ -69,7 +69,7 @@ if (!isset($_SESSION["admin"])) {
                                 <a href="#" class="btn btn-warning btn-sm">編輯</a>
                                 <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal">刪除</button>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>

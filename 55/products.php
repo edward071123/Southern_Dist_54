@@ -66,9 +66,8 @@ if (!isset($_SESSION["admin"])) {
                                 <input type="radio" name="productStatus1" value="hidden"> 隱藏
                             </td>`
                             <td>
-                                <!-- 操作欄位：編輯、刪除按鈕 -->
-                                <a href="/admin/product/123/edit" class="btn btn-primary btn-sm">編輯</a>
-                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">刪除</button>
+                                <a href="#" class="btn btn-warning btn-sm">編輯</a>
+                                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal">刪除</button>
                             </td>
                         </tr>
                     </tbody>
@@ -117,21 +116,23 @@ if (!isset($_SESSION["admin"])) {
 
         <!-- 刪除確認模態窗 -->
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteLabel">確認刪除</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteLabel">確認刪除</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        您確定要刪除此產品嗎？此操作無法復原。
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-danger" id="deleteConfirmBtn">確定刪除</button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                您確定要刪除此產品嗎？此操作無法復原。
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-danger" id="deleteConfirmBtn">確定刪除</button>
-            </div>
-            </div>
-        </div>
         </div>
 
         <!-- 第四列: 頁尾 -->

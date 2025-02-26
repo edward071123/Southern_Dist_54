@@ -45,6 +45,7 @@ if (!isset($_SESSION["admin"])) {
                 <table class="table table-bordered">
                     <thead class="thead-dark">
                         <tr>
+                            <th>產品圖片</th>
                             <th>產品名稱 (中文)</th>
                             <th>產品名稱 (英文)</th>
                             <th>GTIN</th>
@@ -55,21 +56,7 @@ if (!isset($_SESSION["admin"])) {
                         </tr>
                     </thead>
                     <tbody id="productTableBody">
-                        <!-- <tr>
-                            <td>示範產品</td>
-                            <td>Demo Product</td>
-                            <td>1234567890123</td>
-                            <td>這是一個示範產品。</td>
-                            <td>This is a demo product.</td>
-                            <td>
-                                <input type="radio" name="productStatus1" value="visible" checked> 顯示
-                                <input type="radio" name="productStatus1" value="hidden"> 隱藏
-                            </td>
-                            <td>
-                                <a href="#" class="btn btn-warning btn-sm">編輯</a>
-                                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal">刪除</button>
-                            </td>
-                        </tr> -->
+                       
                     </tbody>
                 </table>
             </div>
@@ -176,6 +163,7 @@ if (!isset($_SESSION["admin"])) {
                     response.forEach(function(product) {
                         productHTML += `
                             <tr>
+                                <td><img src="${product.image}" alt="產品圖片" class="img-thumbnail" width="100"></td>
                                 <td>${product.name}</td>
                                 <td>${product.name_en}</td>
                                 <td>${product.gtin}</td>

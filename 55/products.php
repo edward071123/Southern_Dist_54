@@ -75,6 +75,10 @@ if (!isset($_SESSION["admin"])) {
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
+                            <label for="companySelect">選擇公司</label>
+                            <select class="form-control" id="companySelect" required></select>
+                        </div>
+                        <div class="form-group">
                             <label for="productName">產品名稱 (中文)</label>
                             <input type="text" class="form-control" id="productName" required>
                         </div>
@@ -148,9 +152,20 @@ if (!isset($_SESSION["admin"])) {
 <script src="js/jquery-ui.js"></script>
 <script>
     $(document).ready(function() {
-
+        loadCompanies();
         // 初次載入產品列表
         loadProducts();
+
+        function loadCompanies() {
+            $.get("get_company_options.php", function(response) {
+                let options = '<option value="">請選擇公司</option>';
+                response.forEach(function(company) {
+                    options += `<option value="${company.id}">${company.name}</option>`;
+                });
+                $("#companySelect").html(options);
+            }, "json");
+        }
+
 
         // AJAX 載入產品列表
         function loadProducts() {
@@ -208,6 +223,7 @@ if (!isset($_SESSION["admin"])) {
         
         $("#submitProduct").click(function() {
             let productData = {
+                companyId: $("#companySelect").val(),
                 productName: $("#productName").val(),
                 productNameEn: $("#productNameEn").val(),
                 gtin: $("#gtin").val(),

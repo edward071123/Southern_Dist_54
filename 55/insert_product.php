@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    $companyId = $productData["companyId"];
     $name = $productData["productName"];
     $name_en = $productData["productNameEn"];
     $gtin = $productData["gtin"];
@@ -41,8 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // 插入到資料庫
-    $stmt = $conn->prepare("INSERT INTO products (name, name_en, gtin, description, description_en, image, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssss", $name, $name_en, $gtin, $description, $description_en, $image, $status);
+    $stmt = $conn->prepare("INSERT INTO products ( company_id, name, name_en, gtin, description, description_en, image, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssssss", $companyId, $name, $name_en, $gtin, $description, $description_en, $image, $status);
 
     if ($stmt->execute()) {
         echo "產品新增成功！";

@@ -46,6 +46,7 @@ if (!isset($_SESSION["admin"])) {
                     <thead class="thead-dark">
                         <tr>
                             <th>產品圖片</th>
+                            <th>公司名稱</th>
                             <th>產品名稱 (中文)</th>
                             <th>產品名稱 (英文)</th>
                             <th>GTIN</th>
@@ -179,8 +180,9 @@ if (!isset($_SESSION["admin"])) {
                         productHTML += `
                             <tr>
                                 <td><img src="uploads/${product.image}" alt="產品圖片" class="img-thumbnail" width="100"></td>
-                                <td>${product.name}</td>
-                                <td>${product.name_en}</td>
+                                <td>${product.company_name}</td>
+                                <td>${product.product_name}</td>
+                                <td>${product.product_name_en}</td>
                                 <td>${product.gtin}</td>
                                 <td>${product.description}</td>
                                 <td>${product.description_en}</td>

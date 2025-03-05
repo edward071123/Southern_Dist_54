@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $companyData = json_decode($_POST["data"], true);
 
     // 確保 JSON 解析成功
-    if (!$productData) {
+    if (!$companyData) {
         echo "JSON 解析失敗！";
         exit;
     }
@@ -16,11 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address= $companyData["address"];
     $phone = $companyData["phone"];
     $email = $companyData["email"];
-    $ownerName = $companyData["ownerName"];
+    $ownerName = $companyData["owner_name"];
 
 
     // 插入到資料庫
-    $stmt = $conn->prepare("INSERT INTO companies (name, address, phone, email, owner_name) VALUES  VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO companies (name, address, phone, email, owner_name) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("sssss", $name, $address, $phone, $email, $ownerName);
 
     if ($stmt->execute()) {

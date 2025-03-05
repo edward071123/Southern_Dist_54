@@ -133,7 +133,7 @@ if (!isset($_SESSION["admin"])) {
                 email: $("#companyEmail").val(),
                 owner_name: $("#ownerName").val()
             };
-
+            console.log(companyData)
             let formData = new FormData();
             formData.append("data", JSON.stringify(companyData));
 

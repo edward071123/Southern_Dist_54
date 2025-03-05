@@ -177,18 +177,23 @@ if (!isset($_SESSION["admin"])) {
                 success: function(response) {
                     let productHTML = "";
                     response.forEach(function(product) {
+                        let company_name = product.company_name
+                        if(product.is_exist === '0') {
+                            company_name += '(已刪除)'
+                        }
+
                         productHTML += `
                             <tr>
                                 <td><img src="uploads/${product.image}" alt="產品圖片" class="img-thumbnail" width="100"></td>
-                                <td>${product.company_name}</td>
+                                <td>${company_name}</td>
                                 <td>${product.product_name}</td>
                                 <td>${product.product_name_en}</td>
                                 <td>${product.gtin}</td>
                                 <td>${product.description}</td>
                                 <td>${product.description_en}</td>
                                 <td>
-                                    <input type="radio" class="updateStatus" name="productStatus_${product.id}" data-id="${product.id}" value="visible" ${product.status === "visible" ? "checked" : ""}> 顯示
-                                    <input type="radio" class="updateStatus" name="productStatus_${product.id}" data-id="${product.id}" value="hidden" ${product.status === "hidden" ? "checked" : ""}> 隱藏
+                                    <input type="radio" class="updateStatus" name="productStatus_${product.product_id}" data-id="${product.product_id}" value="visible" ${product.product_status === "visible" ? "checked" : ""}> 顯示
+                                    <input type="radio" class="updateStatus" name="productStatus_${product.product_id}" data-id="${product.product_id}" value="hidden" ${product.product_status === "hidden" ? "checked" : ""}> 隱藏
                                 </td>
                                 <td>
                                     <button class="btn btn-warning btn-sm">編輯</button>

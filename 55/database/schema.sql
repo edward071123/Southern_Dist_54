@@ -17,7 +17,6 @@ CREATE TABLE products (
     image VARCHAR(255) DEFAULT 'default.png',
     status ENUM('visible', 'hidden') DEFAULT 'visible',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE,
     UNIQUE (gtin) -- 確保 GTIN 的唯一性
 );
 

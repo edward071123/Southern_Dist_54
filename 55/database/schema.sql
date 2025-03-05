@@ -20,3 +20,10 @@ CREATE TABLE products (
     FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE,
     UNIQUE (gtin) -- 確保 GTIN 的唯一性
 );
+
+
+ALTER TABLE companies
+ADD COLUMN address VARCHAR(255) NOT NULL AFTER name,
+ADD COLUMN phone VARCHAR(20) NOT NULL AFTER address,
+ADD COLUMN email VARCHAR(100) NOT NULL AFTER phone,
+ADD COLUMN owner_name VARCHAR(100) NOT NULL AFTER email;

@@ -15,8 +15,8 @@ $sql = "SELECT
                 p.description_en,
                 p.image,
                 p.status AS product_status
-            FROM companies c
-            LEFT JOIN products p ON c.id = p.company_id
+            FROM products p 
+            LEFT JOIN companies c ON c.id = p.company_id
             ORDER BY c.name, p.name";
             
 $result = $conn->query($sql);

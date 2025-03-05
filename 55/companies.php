@@ -134,10 +134,13 @@ if (!isset($_SESSION["admin"])) {
                 owner_name: $("#ownerName").val()
             };
 
+            let formData = new FormData();
+            formData.append("data", JSON.stringify(companyData));
+
             $.ajax({
                 url: "insert_company.php",
                 type: "POST",
-                data: companyData,
+                data: formData,
                 contentType: false,
                 processData: false,
                 success: function(response) {

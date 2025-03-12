@@ -41,6 +41,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    // 檢查是否為 13 位數字
+    if (!preg_match('/^\d{13}$/', $gtin)) {
+        echo "gtin並非為13位數字！";
+        exit;
+    }
+
+    $sql = "SELECT id FROM products WHERE gtin = ?";
+    $rstmt = $conn->prepare($sql);
+    $rstmt->bind_param("s", $gtin);
+    $rstmt->execute();
+    $result = $rstmt->get_result();
+    if ($result->num_rows > 0) {
+        echo "gtin已存在！";
+        exit;
+    }
+    
     // 插入到資料庫
     $stmt = $conn->prepare("INSERT INTO products ( company_id, name, name_en, gtin, description, description_en, image, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("isssssss", $companyId, $name, $name_en, $gtin, $description, $description_en, $image, $status);

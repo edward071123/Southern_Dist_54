@@ -36,7 +36,12 @@ if (!isset($_SESSION["admin"])) {
             </div>
         </div>
 
-
+        <form action="import_products.php" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".json, .csv" required>
+            <button type="submit">匯入產品</button>
+        </form>
+        <a href="export_products.php?format=json" class="btn btn-success btn-sm">下載 JSON</a>
+        <a href="export_products.php?format=csv" class="btn btn-primary btn-sm">下載 CSV</a>
         <!-- 第三列: 產品管理 -->
         <div class="row bg-light text-center py-5">
             <div class="col-12">

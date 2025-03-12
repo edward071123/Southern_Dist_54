@@ -14,7 +14,7 @@ if (!$gtins) {
 // 驗證 GTIN 是否為 13 位數並符合 Luhn 演算法
 function isValidGTIN13($gtin) {
     if (!preg_match('/^\d{13}$/', $gtin)) return false;
-
+    return true;
 }
 
 // 查詢 GTIN 是否存在於資料庫

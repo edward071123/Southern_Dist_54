@@ -9,8 +9,14 @@ if (!$gtin) {
     echo json_encode(["error" => "請提供 GTIN"]);
     exit;
 }
+$sql = "SELECT 
+                c.name AS company_name, 
+                p.*
+            FROM products AS p 
+            LEFT JOIN companies AS c ON c.id = p.company_id
+            WHERE p.gtin = ?";
+$stmt = $conn->prepare($sql);
 
-$stmt = $conn->prepare("SELECT * FROM products WHERE gtin = ?");
 $stmt->bind_param("s", $gtin);
 $stmt->execute();
 $result = $stmt->get_result();
